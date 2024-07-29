@@ -1,6 +1,6 @@
 # TextSpot
 
-TextSpot is a web platform that allows users to upload images and extract text from them using OCR technology. This project is developed as part of an externship and utilizes modern web development technologies.
+TextSpot is a web platform that allows users to upload images and extract text from them using OCR technology. This project utilizes modern web development technologies.
 
 ## Technologies Used
 

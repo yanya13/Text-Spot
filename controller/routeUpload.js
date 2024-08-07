@@ -20,12 +20,12 @@ router.post('/upload', upload.single('textImage'), function(req, res){
             });
         }
 
-        const image_url = result.secure_url;
+        // const image_url = result.secure_url;
 
         res.status(200).json({
             success: true,
             message: "Uploaded!",
-            data: image_url
+            data: result
         });
     });
 });

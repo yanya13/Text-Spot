@@ -1,6 +1,7 @@
 const path = require("path")
 const express = require("express")
 const uploadRoute = require('./controller/routeUpload')
+const extractTextRoute = require('./controller/extractTextRoute')
 const upload = require("./middleware/multer");
 
 const app = express()
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
 
 
 app.use('/api', uploadRoute);
+app.use('/api', extractTextRoute);
 
 
 app.listen(PORT, () => console.log(`listening at http://localhost:${PORT}`))

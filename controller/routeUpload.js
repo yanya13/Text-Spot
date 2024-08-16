@@ -3,7 +3,7 @@ const router = express.Router();
 const cloudinary = require('../utils/cloudinary');
 const upload = require('../middleware/multer');
 const axios = require('axios');
-const recognizeText = require('../test_extractor');
+const recognizeText = require('../core/text_extractor');
 
 
 router.post('/upload', upload.single('textImage'), async function(req, res){
@@ -21,12 +21,12 @@ router.post('/upload', upload.single('textImage'), async function(req, res){
         // get image url from the cloudinary response
         const imageUrl = result.secure_url;
 
-        // fetch the image data from cloudinary as a buffer
-        const response = await axios.get(imageUrl, {responseType:'arraybuffer' });
-        const imageBuffer = Buffer.from(response.data, 'binary');
+        // calling the text extraction endpoint
+        const textExtractionResponse = await axios.post('http://localhost:8000/api/extract-text', {
+            imageUrl: imageUrl
+        });      
 
-        // Extract text from the image buffer using recongizeText function
-        const extractedText = await recognizeText(imageBuffer);
+        
 
         // send response with image URL and extracted text
         res.status(200).json({
@@ -34,7 +34,7 @@ router.post('/upload', upload.single('textImage'), async function(req, res){
             message: "Uploaded and Text Extracted!",
             data: {
                 imageUrl: imageUrl,
-                extractedText: extractedText
+                extractedText: textExtractionResponse.data.data.extractedText
             }
         });
          

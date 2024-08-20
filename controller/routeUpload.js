@@ -18,12 +18,6 @@ router.post('/upload', upload.single('textImage'), async function(req, res) {
 
         const extractedText = textExtractionResponse.data.data.extractedText;
 
-        // render the homepage again with results
-        // res.render('homepage', {
-        //     imageUrl: imageUrl,
-        //     extractedText: extractedText
-        // });
-
         res.status(200).json({
             success: true,
             message: "Text Extracted!",

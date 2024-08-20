@@ -3,27 +3,18 @@ const router = express.Router();
 const cloudinary = require('../utils/cloudinary');
 const upload = require('../middleware/multer');
 const axios = require('axios');
-const { deleteImageCheck } = require('../utils/counterUtils')
+const { deleteImageCheck } = require('../utils/counterUtils');
 
-
-router.post('/upload', upload.single('textImage'), async function(req, res){
-    
+router.post('/upload', upload.single('textImage'), async function(req, res) {
     try {
-
-      
         await deleteImageCheck();
 
-        
-        const result =  await cloudinary.uploader.upload(req.file.path);
-
-       
+        const result = await cloudinary.uploader.upload(req.file.path);
         const imageUrl = result.secure_url;
 
-       
         const textExtractionResponse = await axios.post('http://localhost:8000/api/extract-text', {
             imageUrl: imageUrl
-        });      
-
+        });
 
         const extractedText = textExtractionResponse.data.data.extractedText;
 
@@ -33,17 +24,15 @@ router.post('/upload', upload.single('textImage'), async function(req, res){
         //     extractedText: extractedText
         // });
 
-        
         res.status(200).json({
             success: true,
             message: "Uploaded and Text Extracted!",
             data: {
                 imageUrl: imageUrl,
-                extractedText: textExtractionResponse.data.data.extractedText
+                extractedText: extractedText
             }
         });
-         
-    }catch(err){
+    } catch (err) {
         console.error(err);
         res.status(500).json({
             success: false,
@@ -51,7 +40,11 @@ router.post('/upload', upload.single('textImage'), async function(req, res){
             error: err.message
         });
     }
-
 });
 
 module.exports = router;
+
+
+
+
+        

@@ -26,9 +26,8 @@ router.post('/upload', upload.single('textImage'), async function(req, res) {
 
         res.status(200).json({
             success: true,
-            message: "Uploaded and Text Extracted!",
+            message: "Text Extracted!",
             data: {
-                imageUrl: imageUrl,
                 extractedText: extractedText
             }
         });

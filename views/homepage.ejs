@@ -7,8 +7,37 @@
 </head>
 <body>
     <form action="/api/upload" method="POST" enctype="multipart/form-data">
-        <input type="file" name="text_image" />
+        <input type="file" name="textImage" />
         <button type="submit">Upload</button>
     </form>
+
+    <div id = "result">
+        <p id = "extractedText"></p>
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async function(event){
+            event.preventDefault(); 
+
+            const formData = new FormData(this);
+            try{
+                const response = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if(data.success){
+                    document.getElementById('extractedText').textContent = data.data.extractedText;
+                } else {
+                    console.error('Error: ', data.message);
+                }
+            } catch (error){
+                console.error('Error: ', error);
+            }
+        });
+    </script>
+
 </body>
 </html>

@@ -2,7 +2,6 @@ const path = require("path")
 const express = require("express")
 const uploadRoute = require('./controller/routeUpload')
 const extractTextRoute = require('./controller/extractTextRoute')
-const upload = require("./middleware/multer");
 
 const app = express()
 const PORT = 8000;

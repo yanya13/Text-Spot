@@ -6,19 +6,20 @@ const extractTextRoute = require('./controller/extractTextRoute')
 const app = express()
 const PORT = 8000;
 
-app.set("view engine", "ejs")
-app.set("views", path.resolve("./views"))
+// app.set("view engine", "ejs")
+// app.set("views", path.resolve("./views"))
 
 app.use(express.urlencoded({extended: false})); // parse data from html form
 app.use(express.json());
 
-app.get("/", (req, res) => {
-    return res.render("homepage")
-})
-
+app.use(express.static(path.join(__dirname, './')))
 
 app.use('/api', uploadRoute);
 app.use('/api', extractTextRoute);
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, '', './public/index.html'))
+})
 
 
 

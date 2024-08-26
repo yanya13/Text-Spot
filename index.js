@@ -12,13 +12,13 @@ const PORT = 8000;
 app.use(express.urlencoded({extended: false})); // parse data from html form
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, './')))
+app.use(express.static(path.join(__dirname, 'frontend', 'build')))
 
 app.use('/api', uploadRoute);
 app.use('/api', extractTextRoute);
 
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, '', './public/index.html'))
+    res.sendFile(path.join(__dirname, 'frontend', 'build', 'index.html'))
 })
 
 
